@@ -1,8 +1,6 @@
 module BindIt
-  
   # This is the module your namespace should extend.
   module Binding
-
     if RUBY_PLATFORM =~ /java/
       require 'java'
       # require 'bind-it/jruby_proxy'
@@ -12,8 +10,7 @@ module BindIt
     end
 
     require 'bind-it/jar_loader'
-    
-    
+
    def self.extended(base)
       super(base)
       # Create configuration options.
@@ -29,7 +26,7 @@ module BindIt
           attr_accessor :log_file
           # The default JARs to load.
           attr_accessor :default_jars
-          # The default Java namespace to 
+          # The default Java namespace to
           # search in for classes.
           attr_accessor :default_namespace
           # The default classes to load.
@@ -46,7 +43,7 @@ module BindIt
     end
 
     ######
-    
+
     # Load the default JARs and classes.
     def bind
       unless self.bound
@@ -80,7 +77,7 @@ module BindIt
       self.bind unless self.bound
       self.load_klass(klass, base, rename)
     end
-    
+
     # Create the Ruby classes corresponding to
     # the StanfordNLP core classes.
     def load_default_classes
@@ -89,9 +86,9 @@ module BindIt
         self.load_klass(klass, base, rename)
       end
     end
-    
+
     protected
-    
+
     # Private function to load classes.
     # Doesn't check if initialized.
     def load_klass(klass, base, name=nil)
@@ -111,14 +108,12 @@ module BindIt
         const_set(name.intern, rb_class)
       end
     end
-    
+
     # Utility function to CamelCase names.
     def camel_case(text)
       text.to_s.gsub(/^[a-z]|_[a-z]/) do |a|
         a.upcase
       end.gsub('_', '')
     end
-    
   end
-  
 end
